@@ -26,7 +26,9 @@ level_1 = False
 level_2 = False
 level_3 = False
 level_4 = False 
-level_5 = False 
+level_5 = False
+won=False
+lose= True
 
 #gems list to randomize 
 color_gems= ["red", "blue", "green", "purple", "pink"]
@@ -45,8 +47,9 @@ directions2 = my_font.render("You need to quickly pick the right gem to advance 
 game_start= my_font.render("click if you are ready to start", True, (0,0,0))
 
 
-
-
+start_time= time.time()
+end_time= time.time()
+time_left = float(round(10 - (end_time - start_time), 2))
 
 #sprites
 c= Cursor(200,150)
@@ -56,6 +59,8 @@ green= Green(random.randint(0,300), random.randint(0,300))
 blue = Blue(random.randint(0,300), random.randint(0,300))
 purple= Purple(random.randint(0,300), random.randint(0,300))
 level= 0
+display_level= my_font.render("level: " + str(level), True , (255,255,255))
+
 
 # set up variables for the display
 SCREEN_HEIGHT = 370
@@ -77,9 +82,13 @@ while run :
         if event.type == pygame.MOUSEBUTTONUP:
             click_start= True
             level += 1
+            display_level = my_font.render("level: " + str(level), True, (255, 255, 255))
         if level ==1:
-            level_1_border= my_font.render("Level One: You have 10 seconds", True, (0,0,0))
+            level_1_border = my_font.render("Level One: You have 10 seconds", True, (0,0,0))
             level_1 == True
+            time_1= float(10)
+            time_left = float(round(10 - (time_1- start_time), 2))
+            time_left_display = my_font.render("Time left:" + str(time_left), True, (255, 255, 255))
         if level == 2:
             level_2_border = my_font.render("level two: You have 8 seconds", True, (0,0,0))
             level_2== True
@@ -89,7 +98,8 @@ while run :
         if level == 4:
             level_4_border = my_font.render("Level four: You have 4 seconds", True, (0,0,0))
             level_4 == True
-
+        if level == 5:
+            level_5_border = my_font.render("Level five:, final blow you have two seconds", True ,(0,0,0))
    #blitting station#
    screen.fill((r,g,b))
 
@@ -106,10 +116,12 @@ while run :
 
 
    if click_start == True:
-       screen.blit(c.image, c.rect)
+       # screen.blit(c.image, c.rect)
+       screen.blit(display_level, (0,10))
 
-   if click_start== True and level_1 == True:
-
+   if level_1 == True:
+       screen.blit(level_1_border,(10,10))
+       display_time_left= (time_left, (20,10))
    pygame.display.update()
 
 
